@@ -1,4 +1,4 @@
 public interface ISceneDependencyReceiver
 {
-    void Inject();
+    void Inject(LevelManager levelManager);
 }

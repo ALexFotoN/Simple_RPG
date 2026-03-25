@@ -1,16 +1,24 @@
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private LevelTemplateSO[] _levelTemplates;
+
+    public string CurentSceneName 
     {
-        
+        get
+        {
+            if(_levelTemplates != null && _levelTemplates.Length > 0)
+            {
+                return _levelTemplates[0].SceneName;
+            }
+            return "1_Menu";
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public LevelManager()
     {
-        
+        _levelTemplates = Resources.LoadAll<LevelTemplateSO>("");
     }
 }

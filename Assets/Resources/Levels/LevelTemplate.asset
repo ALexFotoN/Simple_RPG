@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f5b6692ea6b60a4a92e7929bbd3fafb, type: 3}
   m_Name: LevelTemplate
   m_EditorClassIdentifier: 
-  _levelPrefab: {fileID: 0}
+  _sceneName: 2_Level_01
   _enemies: []
   _quests: []

@@ -14,7 +14,7 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
         bootstrapper.RegisterSceneDependencies(this);
     }
 
-    public void Inject()
+    public void Inject(LevelManager levelManager)
     {
         InitializeScene();
     }
