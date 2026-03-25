@@ -3,13 +3,12 @@ using UnityEngine;
 public class MenuSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
 {
     [SerializeField] 
-    private MenuView menuViewPrefab;
+    private MenuView _menuViewPrefab;
 
     private LevelManager _levelManager;
 
     private void Awake()
     {
-        //var bootstrapper = FindObjectOfType<GameBootstrapper>();
         var bootstrapper = FindFirstObjectByType<GameBootstrapper>();
         if (bootstrapper == null)
         {
@@ -19,7 +18,7 @@ public class MenuSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
         bootstrapper.RegisterSceneDependencies(this);
     }
 
-    public void Inject(LevelManager levelManager)
+    public void Inject(EventBus eventBus, LevelManager levelManager)
     {
         _levelManager = levelManager;
 
@@ -28,7 +27,7 @@ public class MenuSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
 
     private void InitializeScene()
     {
-        var menuView = Instantiate(menuViewPrefab);
+        var menuView = Instantiate(_menuViewPrefab);
         IMenuModel model = new MenuModel(_levelManager.CurentSceneName);
         new MenuPresenter(menuView, model);
     }

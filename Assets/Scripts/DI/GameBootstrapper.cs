@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class GameBootstrapper : MonoBehaviour
 {
+    public EventBus EventBus { get; private set; }
     public LevelManager LevelManager { get; private set; }
 
     private void Awake()
@@ -14,13 +15,13 @@ public class GameBootstrapper : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
 
-        // Инициализация сервисов
+        EventBus = new EventBus();
         LevelManager = new LevelManager();
     }
 
     public void RegisterSceneDependencies(ISceneDependencyReceiver receiver)
     {
-        receiver.Inject(LevelManager);
+        receiver.Inject(EventBus, LevelManager);
     }
     private void Start()
     {

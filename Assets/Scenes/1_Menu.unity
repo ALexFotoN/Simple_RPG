@@ -455,7 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af8ce112f62aab2499875efeeaebc0a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuViewPrefab: {fileID: 6924732936870264441, guid: 6132ff2934fe14147bda1c968b70f5a0, type: 3}
+  _menuViewPrefab: {fileID: 6924732936870264441, guid: 6132ff2934fe14147bda1c968b70f5a0, type: 3}
 --- !u!4 &1230714761
 Transform:
   m_ObjectHideFlags: 0
