@@ -2,11 +2,16 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private Transform _attackPoint;
-    [SerializeField] private float _attackRange = 0.5f;
-    [SerializeField] private LayerMask _enemyLayer;
-    [SerializeField] private int _damage = 10;
-    [SerializeField] private float _attackCooldown = 0.5f;
+    [SerializeField] 
+    private Transform _attackPoint;
+    [SerializeField] 
+    private float _attackRange = 0.5f;
+    [SerializeField] 
+    private LayerMask _enemyLayer;
+    [SerializeField] 
+    private int _damage = 10;
+    [SerializeField] 
+    private float _attackCooldown = 0.5f;
 
     private IInputHandler _input;
     private EventBus _eventBus;

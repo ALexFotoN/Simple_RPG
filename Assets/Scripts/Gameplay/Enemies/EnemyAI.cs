@@ -2,12 +2,6 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] 
-    private Transform _player;
-    [SerializeField] 
-    private Animator _animator;
-
     [Header("Movement")]
     [SerializeField] 
     private float _moveSpeed = 3f;
@@ -24,9 +18,12 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] 
     private int _damage = 10;
 
+    private Transform _player;
+
     private Rigidbody _rb;
     private Vector3 _startPosition;
     private EnemyHealth _health;
+    private EnemyAnimator _animator;
     private EventBus _eventBus;
 
     private enum State { Idle, Chase, Attack, Return }
@@ -42,6 +39,8 @@ public class EnemyAI : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _health = GetComponent<EnemyHealth>();
         if (_health != null) _health.Construct(_eventBus);
+        _animator = GetComponent<EnemyAnimator>();
+        _animator.Construct(_eventBus);
     }
 
     private void Awake()
@@ -122,7 +121,7 @@ public class EnemyAI : MonoBehaviour
 
             _lastAttackTime = Time.time;
 
-            _animator.SetTrigger("Attack");
+            _eventBus?.Publish(new EnemyAttackedEvent());
         }
     }
 }

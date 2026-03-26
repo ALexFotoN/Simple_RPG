@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 5316264481576326880}
   - component: {fileID: 1825499531683351275}
   - component: {fileID: 271450574700257618}
+  - component: {fileID: 3825600038678400525}
   - component: {fileID: 3865055899129285649}
   - component: {fileID: 250794295467991462}
   m_Layer: 7
@@ -277,8 +278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77866629e04bbb54e86a8217147ee789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
-  _animator: {fileID: 250794295467991462}
   _moveSpeed: 3
   _chaseRange: 10
   _attackRange: 1.5
@@ -298,6 +297,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 30
+--- !u!114 &3825600038678400525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8979654970827203803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e6553c576dfbc47b3c6db22b18be0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 250794295467991462}
 --- !u!54 &3865055899129285649
 Rigidbody:
   m_ObjectHideFlags: 0
