@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff7cd71080edfb43b706f85dd461c77, type: 3}
   m_Name: EnemyTemplate
   m_EditorClassIdentifier: 
+  _prefab: {fileID: 8979654970827203803, guid: e745c282467d19a449a8fd8f665faed3, type: 3}

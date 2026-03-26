@@ -16,6 +16,17 @@ public class LevelManager
         }
     }
 
+    public LevelTemplateSO CurentLevel
+    {
+        get
+        {
+            if (_levelTemplates != null && _levelTemplates.Length > 0)
+            {
+                return _levelTemplates[0];
+            }
+            return null;
+        }
+    }
 
     public LevelManager()
     {

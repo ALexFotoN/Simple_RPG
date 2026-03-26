@@ -3,7 +3,6 @@ using UnityEngine;
 public class PlayerAbility : MonoBehaviour
 {
     [SerializeField] private float _cooldown = 3f;
-    [SerializeField] private int _manaCost = 10;
     [SerializeField] private GameObject _abilityEffect;
     [SerializeField] private float _abilityRange = 5f;
 

@@ -2,23 +2,28 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    [SerializeField] private int _maxHealth = 50;
+    [SerializeField] private int maxHealth = 30;
     private int _currentHealth;
+    private EventBus _eventBus;
 
-    private void Awake()
+    public void Construct(EventBus eventBus)
     {
-        _currentHealth = _maxHealth;
+        _eventBus = eventBus;
+        _currentHealth = maxHealth;
     }
 
     public void TakeDamage(int amount)
     {
         _currentHealth -= amount;
         if (_currentHealth <= 0)
+        {
             Die();
+        }
     }
 
     private void Die()
     {
+        _eventBus?.Publish(new EnemyKilledEvent(this));
         Destroy(gameObject);
     }
 }

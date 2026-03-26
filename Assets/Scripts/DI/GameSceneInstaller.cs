@@ -49,10 +49,30 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
         ability?.Construct(input, _eventBus);
 
         SpawnLevelObjects();
+        SpawnEnemies(playerObj.transform);
     }
 
     private void SpawnLevelObjects()
     {
         //LevelTemplate
+    }
+
+    private void SpawnEnemies(Transform player)
+    {
+        LevelTemplateSO levelData = _levelManager.CurentLevel;
+        foreach (var spawnInfo in levelData.Enemies)
+        {
+            GameObject enemyObj = Instantiate(spawnInfo.Prefab);
+            EnemyAI ai = enemyObj.GetComponent<EnemyAI>();
+            if (ai != null)
+            {
+                ai.Construct(player, _eventBus);
+            }
+            else
+            {
+                EnemyHealth health = enemyObj.GetComponent<EnemyHealth>();
+                if (health != null) health.Construct(_eventBus);
+            }
+        }
     }
 }

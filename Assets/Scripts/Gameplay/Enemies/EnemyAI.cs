@@ -1,0 +1,121 @@
+using UnityEngine;
+
+public class EnemyAI : MonoBehaviour
+{
+    [Header("References")]
+    [SerializeField] private Transform player;
+    [SerializeField] private Transform startPoint;
+    [SerializeField] private Animator animator;
+
+    [Header("Movement")]
+    [SerializeField] private float moveSpeed = 3f;
+    [SerializeField] private float chaseRange = 10f;
+    [SerializeField] private float attackRange = 1.5f;
+    [SerializeField] private float returnRange = 12f;
+
+    [Header("Attack")]
+    [SerializeField] private float attackCooldown = 1f;
+    [SerializeField] private int damage = 10;
+
+    private Rigidbody _rb;
+    private Vector3 _startPosition;
+    private EnemyHealth _health;
+    private EventBus _eventBus;
+
+    private enum State { Idle, Chase, Attack, Return }
+    private State _currentState = State.Idle;
+
+    private float _lastAttackTime;
+
+    public void Construct(Transform playerTransform, EventBus eventBus)
+    {
+        player = playerTransform;
+        _eventBus = eventBus;
+    }
+
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+        _health = GetComponent<EnemyHealth>();
+        if (_health != null) _health.Construct(_eventBus);
+
+        _startPosition = transform.position;
+        if (startPoint != null) _startPosition = startPoint.position;
+
+        _currentState = State.Idle;
+    }
+
+    private void Update()
+    {
+        if (player == null) return;
+
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        switch (_currentState)
+        {
+            case State.Idle:
+                if (distanceToPlayer <= chaseRange)
+                    _currentState = State.Chase;
+                else if (distanceToPlayer >= returnRange)
+                    _currentState = State.Return;
+                break;
+
+            case State.Chase:
+                if (distanceToPlayer <= attackRange)
+                    _currentState = State.Attack;
+                else if (distanceToPlayer > chaseRange)
+                    _currentState = State.Return;
+                break;
+
+            case State.Attack:
+                if (distanceToPlayer > attackRange)
+                    _currentState = State.Chase;
+                // атакуем в Update
+                break;
+
+            case State.Return:
+                if (Vector3.Distance(transform.position, _startPosition) < 0.5f)
+                    _currentState = State.Idle;
+                else if (distanceToPlayer <= chaseRange)
+                    _currentState = State.Chase;
+                break;
+        }
+
+        switch (_currentState)
+        {
+            case State.Chase:
+                MoveTowards(player.position);
+                break;
+            case State.Return:
+                MoveTowards(_startPosition);
+                break;
+            case State.Attack:
+                Attack();
+                break;
+            case State.Idle:
+                break;
+        }
+    }
+
+    private void MoveTowards(Vector3 target)
+    {
+        Vector3 direction = (target - transform.position).normalized;
+        direction.y = 0;
+        Vector3 newPosition = transform.position + direction * moveSpeed * Time.deltaTime;
+        _rb.MovePosition(newPosition);
+        if (direction != Vector3.zero)
+            transform.forward = direction;
+    }
+
+    private void Attack()
+    {
+        if (Time.time >= _lastAttackTime + attackCooldown)
+        {
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+                playerHealth.TakeDamage(damage);
+
+            _lastAttackTime = Time.time;
+        }
+    }
+}
