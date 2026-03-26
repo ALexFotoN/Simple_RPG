@@ -30,10 +30,15 @@ public class QuestManager
     private void OnGameEvent(GameEvent gameEvent)
     {
         bool anyChanged = false;
-        foreach (var quest in _activeQuests)
+        for (int i = 0; i < _activeQuests.Count; i++)
         {
+            var quest = _activeQuests[i];
             bool wasCompleted = quest.IsCompleted;
             quest.CheckProgress(gameEvent);
+            if (quest == null)
+            {
+                continue;
+            }
             if (!wasCompleted && quest.IsCompleted)
                 anyChanged = true;
             else if (!wasCompleted && !quest.IsCompleted)
@@ -45,8 +50,13 @@ public class QuestManager
 
     private void OnQuestCompleted(Quest quest)
     {
-        //_activeQuests.Remove(quest);
+        _activeQuests.Remove(quest);
         OnQuestsChanged?.Invoke();
+    }
+
+    public void ClearAllQuests()
+    {
+        _activeQuests = new();
     }
 
     public List<Quest> GetActiveQuests() => _activeQuests;

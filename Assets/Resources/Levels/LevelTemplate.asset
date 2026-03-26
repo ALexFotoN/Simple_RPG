@@ -16,6 +16,7 @@ MonoBehaviour:
   _enemies: []
   _quests:
   - {fileID: 11400000, guid: 03e1575c840b1164381351b748d7f145, type: 2}
+  - {fileID: 11400000, guid: 7cc50ef3605757d4fbcb0405df502743, type: 2}
   _items:
   - itemPrefab: {fileID: 973601463283924929, guid: 176be73dc86be7e4ebfa92047b714bb8, type: 3}
     position: {x: 3, y: 0.5, z: 0}

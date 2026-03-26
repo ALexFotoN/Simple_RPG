@@ -32,6 +32,8 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
 
     private void InitializeScene()
     {
+        _questManager.ClearAllQuests();
+
         HUDView hudView = Instantiate(_hudViewPrefab);
         HUDModel hudModel = new HUDModel();
 
@@ -54,6 +56,16 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
         SpawnEnemies(playerObj.transform);
         SetupQuests();
         SpawnItems();
+
+        LevelExit exit = FindFirstObjectByType<LevelExit>();
+        if (exit == null)
+        {
+            Debug.LogWarning("No LevelExit found in scene");
+        }
+        else
+        {
+            exit.Construct(_eventBus);
+        }
     }
 
     private void SpawnLevelObjects()

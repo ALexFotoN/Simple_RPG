@@ -22,3 +22,5 @@ public class ItemCollectedEvent : GameEvent
         Item = item;
     }
 }
+
+public class LevelCompletedEvent : GameEvent { }

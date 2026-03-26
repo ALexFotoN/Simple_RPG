@@ -17,7 +17,7 @@ public class GameBootstrapper : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         EventBus = new EventBus();
-        LevelManager = new LevelManager();
+        LevelManager = new LevelManager(EventBus);
         QuestManager = new QuestManager(EventBus);
     }
 
@@ -25,8 +25,9 @@ public class GameBootstrapper : MonoBehaviour
     {
         receiver.Inject(EventBus, LevelManager, QuestManager);
     }
+
     private void Start()
     {
-        SceneManager.LoadScene("1_Menu");
+        LevelManager.OpenMenu();
     }
 }
