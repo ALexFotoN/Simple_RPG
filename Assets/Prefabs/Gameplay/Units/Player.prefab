@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown: 3
-  _abilityEffect: {fileID: 0}
+  _abilityPrefab: {fileID: 820035152895724987, guid: 856b67939fb42ac4c87dceb33f942881, type: 3}
   _abilityRange: 5
 --- !u!114 &509132421963825221
 MonoBehaviour:
