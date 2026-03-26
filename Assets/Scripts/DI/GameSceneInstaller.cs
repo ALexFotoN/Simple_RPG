@@ -43,7 +43,9 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
         var movement = playerObj.GetComponent<PlayerMovement>();
         var attack = playerObj.GetComponent<PlayerAttack>();
         var health = playerObj.GetComponent<PlayerHealth>();
-        var ability = playerObj.GetComponent<PlayerAbility>();
+        var ability = playerObj.GetComponent<PlayerAbility>(); 
+        var rotate = playerObj.GetComponent<PlayerRotate>();
+        var animator = playerObj.GetComponent<PlayerAnimator>();
 
         IInputHandler input = new KeyboardInput();
 
@@ -51,8 +53,9 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
         attack?.Construct(input, _eventBus);
         health?.Construct(_eventBus);
         ability?.Construct(input, _eventBus);
+        rotate?.Construct(input);
+        animator?.Construct(_eventBus);
 
-        SpawnLevelObjects();
         SpawnEnemies(playerObj.transform);
         SetupQuests();
         SpawnItems();
@@ -66,11 +69,6 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
         {
             exit.Construct(_eventBus);
         }
-    }
-
-    private void SpawnLevelObjects()
-    {
-        //LevelTemplate
     }
 
     private void SpawnEnemies(Transform player)

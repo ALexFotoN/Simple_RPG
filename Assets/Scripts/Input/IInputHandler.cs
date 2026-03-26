@@ -7,4 +7,5 @@ public interface IInputHandler
     bool JumpUnpressed { get; }
     bool AttackPressed { get; }
     bool AbilityPressed { get; }
+    Vector3 MouseWorldPosition { get; }
 }

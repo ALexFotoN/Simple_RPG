@@ -36,7 +36,7 @@ public class PlayerAttack : MonoBehaviour
             if (health != null)
                 health.TakeDamage(_damage);
         }
-        //_eventBus?.Publish(new PlayerAttackedEvent());
+        _eventBus?.Publish(new PlayerAttackedEvent());
     }
 
     private void OnDrawGizmosSelected()

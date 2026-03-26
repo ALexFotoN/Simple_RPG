@@ -121,6 +121,8 @@ public class EnemyAI : MonoBehaviour
                 playerHealth.TakeDamage(_damage);
 
             _lastAttackTime = Time.time;
+
+            _animator.SetTrigger("Attack");
         }
     }
 }
