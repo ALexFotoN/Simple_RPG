@@ -55,7 +55,6 @@ public class HUDPresenter
         {
             display += $"{q.Title}: ";
             if (q is KillQuest kq) display += kq.GetProgressText();
-            else if (q is ReachPointQuest) display += "Не выполнено";
             else if (q is CollectQuest cq) display += cq.GetProgressText();
             display += "\n\n";
         }
