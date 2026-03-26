@@ -18,21 +18,21 @@ public class PlayerAbility : MonoBehaviour
 
     private void Update()
     {
-        if (_input.AbilityPressed && Time.time >= _lastUseTime + _cooldown)
-        {
-            UseAbility();
-            _lastUseTime = Time.time;
-            _eventBus?.Publish(new PlayerAbilityCooldownEvent(_cooldown));
-        }
-        else if (Time.time < _lastUseTime + _cooldown)
-        {
-            float remaining = (_lastUseTime + _cooldown - Time.time) / _cooldown;
-            _eventBus?.Publish(new PlayerAbilityCooldownEvent(remaining));
-        }
-        else
-        {
-            _eventBus?.Publish(new PlayerAbilityCooldownEvent(0));
-        }
+        //if (_input.AbilityPressed && Time.time >= _lastUseTime + _cooldown)
+        //{
+        //    UseAbility();
+        //    _lastUseTime = Time.time;
+        //    _eventBus?.Publish(new PlayerAbilityCooldownEvent(_cooldown));
+        //}
+        //else if (Time.time < _lastUseTime + _cooldown)
+        //{
+        //    float remaining = (_lastUseTime + _cooldown - Time.time) / _cooldown;
+        //    _eventBus?.Publish(new PlayerAbilityCooldownEvent(remaining));
+        //}
+        //else
+        //{
+        //    _eventBus?.Publish(new PlayerAbilityCooldownEvent(0));
+        //}
     }
 
     private void UseAbility()

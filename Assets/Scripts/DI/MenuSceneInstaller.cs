@@ -18,7 +18,7 @@ public class MenuSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
         bootstrapper.RegisterSceneDependencies(this);
     }
 
-    public void Inject(EventBus eventBus, LevelManager levelManager)
+    public void Inject(EventBus eventBus, LevelManager levelManager, QuestManager questManager)
     {
         _levelManager = levelManager;
 

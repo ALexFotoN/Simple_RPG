@@ -5,10 +5,16 @@ using UnityEngine.UI;
 
 public class HUDView : MonoBehaviour, IHUDView
 {
-    [SerializeField] private Slider _healthSlider;
-    [SerializeField] private TMP_Text _healthText;
-    [SerializeField] private Image _abilityCooldownFill;
-    [SerializeField] private Button _menuButton;
+    [SerializeField] 
+    private Slider _healthSlider;
+    [SerializeField] 
+    private TMP_Text _healthText;
+    [SerializeField] 
+    private Image _abilityCooldownFill;
+    [SerializeField] 
+    private Button _menuButton;
+    [SerializeField] 
+    private TMP_Text _questsText;
 
     public event Action OnMenuButtonClicked;
 
@@ -34,4 +40,6 @@ public class HUDView : MonoBehaviour, IHUDView
 
     public void Show() => gameObject.SetActive(true);
     public void Hide() => gameObject.SetActive(false);
+
+    public void UpdateQuests(string text) => _questsText.text = text;
 }

@@ -8,6 +8,7 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
 
     private EventBus _eventBus;
     private LevelManager _levelManager;
+    private QuestManager _questManager;
 
     private void Awake()
     {
@@ -20,10 +21,11 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
         bootstrapper.RegisterSceneDependencies(this);
     }
 
-    public void Inject(EventBus eventBus, LevelManager levelManager)
+    public void Inject(EventBus eventBus, LevelManager levelManager, QuestManager questManager)
     {
         _eventBus = eventBus;
         _levelManager = levelManager;
+        _questManager = questManager;
 
         InitializeScene();
     }
@@ -33,7 +35,7 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
         HUDView hudView = Instantiate(_hudViewPrefab);
         HUDModel hudModel = new HUDModel();
 
-        new HUDPresenter(hudView, hudModel, _eventBus, _levelManager);
+        new HUDPresenter(hudView, hudModel, _eventBus, _levelManager, _questManager);
 
         GameObject playerObj = Instantiate(_playerPrefab, _spawnPoint.position, Quaternion.identity);
         var movement = playerObj.GetComponent<PlayerMovement>();
@@ -50,6 +52,8 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
 
         SpawnLevelObjects();
         SpawnEnemies(playerObj.transform);
+        SetupQuests();
+        SpawnItems();
     }
 
     private void SpawnLevelObjects()
@@ -73,6 +77,39 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
                 EnemyHealth health = enemyObj.GetComponent<EnemyHealth>();
                 if (health != null) health.Construct(_eventBus);
             }
+        }
+    }
+
+    private void SetupQuests()
+    {
+        LevelTemplateSO levelData = _levelManager.CurentLevel;
+
+        foreach (var quest in levelData.Quests)
+        {
+            if (quest.Type == QuestTemplateSO.QuestType.Kill)
+            {
+                _questManager.StartQuest(QuestFactory.CreateKillQuest(quest.Title, quest.Description, quest.TargetCount));
+            }
+            else if (quest.Type == QuestTemplateSO.QuestType.ReachPoint)
+            {
+                _questManager.StartQuest(QuestFactory.CreateReachPointQuest(quest.Title, quest.Description, quest.TargetId));
+            }
+            else if (quest.Type == QuestTemplateSO.QuestType.CollectQuest)
+            {
+                _questManager.StartQuest(QuestFactory.CreateCollectQuest(quest.Title, quest.Description, quest.TargetId, quest.TargetCount));
+            }
+        }
+    }
+
+    private void SpawnItems()
+    {
+        LevelTemplateSO levelData = _levelManager.CurentLevel;
+        foreach (var spawnInfo in levelData.Items)
+        {
+            GameObject itemObj = Instantiate(spawnInfo.itemPrefab, spawnInfo.position, Quaternion.identity);
+            var collectible = itemObj.GetComponent<CollectibleItem>();
+            if (collectible != null)
+                collectible.Construct(_eventBus);
         }
     }
 }

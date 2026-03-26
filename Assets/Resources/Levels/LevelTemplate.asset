@@ -13,6 +13,13 @@ MonoBehaviour:
   m_Name: LevelTemplate
   m_EditorClassIdentifier: 
   _sceneName: 2_Level_01
-  _enemies:
-  - {fileID: 11400000, guid: 16c3324e876cc4f4e8009c04e4b43616, type: 2}
-  _quests: []
+  _enemies: []
+  _quests:
+  - {fileID: 11400000, guid: 03e1575c840b1164381351b748d7f145, type: 2}
+  _items:
+  - itemPrefab: {fileID: 973601463283924929, guid: 176be73dc86be7e4ebfa92047b714bb8, type: 3}
+    position: {x: 3, y: 0.5, z: 0}
+  - itemPrefab: {fileID: 973601463283924929, guid: 176be73dc86be7e4ebfa92047b714bb8, type: 3}
+    position: {x: 3, y: 0.5, z: 3}
+  - itemPrefab: {fileID: 973601463283924929, guid: 176be73dc86be7e4ebfa92047b714bb8, type: 3}
+    position: {x: 0, y: 0.5, z: 3}

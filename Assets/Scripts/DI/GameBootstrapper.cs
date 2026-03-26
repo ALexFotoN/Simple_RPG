@@ -5,6 +5,7 @@ public class GameBootstrapper : MonoBehaviour
 {
     public EventBus EventBus { get; private set; }
     public LevelManager LevelManager { get; private set; }
+    public QuestManager QuestManager { get; private set; }
 
     private void Awake()
     {
@@ -17,11 +18,12 @@ public class GameBootstrapper : MonoBehaviour
 
         EventBus = new EventBus();
         LevelManager = new LevelManager();
+        QuestManager = new QuestManager(EventBus);
     }
 
     public void RegisterSceneDependencies(ISceneDependencyReceiver receiver)
     {
-        receiver.Inject(EventBus, LevelManager);
+        receiver.Inject(EventBus, LevelManager, QuestManager);
     }
     private void Start()
     {

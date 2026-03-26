@@ -13,5 +13,14 @@ public class LevelTemplateSO : ScriptableObject
     private QuestTemplateSO[] _quests;
     public QuestTemplateSO[] Quests => _quests;
 
-    //items (optional)
+    [SerializeField]
+    private ItemSpawnInfo[] _items;
+    public ItemSpawnInfo[] Items => _items;
+}
+
+[System.Serializable]
+public class ItemSpawnInfo
+{
+    public GameObject itemPrefab;
+    public Vector3 position;
 }

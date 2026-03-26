@@ -3,19 +3,26 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Transform player;
-    [SerializeField] private Transform startPoint;
-    [SerializeField] private Animator animator;
+    [SerializeField] 
+    private Transform _player;
+    [SerializeField] 
+    private Animator _animator;
 
     [Header("Movement")]
-    [SerializeField] private float moveSpeed = 3f;
-    [SerializeField] private float chaseRange = 10f;
-    [SerializeField] private float attackRange = 1.5f;
-    [SerializeField] private float returnRange = 12f;
+    [SerializeField] 
+    private float _moveSpeed = 3f;
+    [SerializeField] 
+    private float _chaseRange = 10f;
+    [SerializeField] 
+    private float _attackRange = 1.5f;
+    [SerializeField] 
+    private float _returnRange = 12f;
 
     [Header("Attack")]
-    [SerializeField] private float attackCooldown = 1f;
-    [SerializeField] private int damage = 10;
+    [SerializeField] 
+    private float _attackCooldown = 1f;
+    [SerializeField] 
+    private int _damage = 10;
 
     private Rigidbody _rb;
     private Vector3 _startPosition;
@@ -29,7 +36,7 @@ public class EnemyAI : MonoBehaviour
 
     public void Construct(Transform playerTransform, EventBus eventBus)
     {
-        player = playerTransform;
+        _player = playerTransform;
         _eventBus = eventBus;
     }
 
@@ -40,43 +47,41 @@ public class EnemyAI : MonoBehaviour
         if (_health != null) _health.Construct(_eventBus);
 
         _startPosition = transform.position;
-        if (startPoint != null) _startPosition = startPoint.position;
 
         _currentState = State.Idle;
     }
 
     private void Update()
     {
-        if (player == null) return;
+        if (_player == null) return;
 
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        float distanceToPlayer = Vector3.Distance(transform.position, _player.position);
 
         switch (_currentState)
         {
             case State.Idle:
-                if (distanceToPlayer <= chaseRange)
+                if (distanceToPlayer <= _chaseRange)
                     _currentState = State.Chase;
-                else if (distanceToPlayer >= returnRange)
+                else if (distanceToPlayer >= _returnRange)
                     _currentState = State.Return;
                 break;
 
             case State.Chase:
-                if (distanceToPlayer <= attackRange)
+                if (distanceToPlayer <= _attackRange)
                     _currentState = State.Attack;
-                else if (distanceToPlayer > chaseRange)
+                else if (distanceToPlayer > _chaseRange)
                     _currentState = State.Return;
                 break;
 
             case State.Attack:
-                if (distanceToPlayer > attackRange)
+                if (distanceToPlayer > _attackRange)
                     _currentState = State.Chase;
-                // атакуем в Update
                 break;
 
             case State.Return:
                 if (Vector3.Distance(transform.position, _startPosition) < 0.5f)
                     _currentState = State.Idle;
-                else if (distanceToPlayer <= chaseRange)
+                else if (distanceToPlayer <= _chaseRange)
                     _currentState = State.Chase;
                 break;
         }
@@ -84,7 +89,7 @@ public class EnemyAI : MonoBehaviour
         switch (_currentState)
         {
             case State.Chase:
-                MoveTowards(player.position);
+                MoveTowards(_player.position);
                 break;
             case State.Return:
                 MoveTowards(_startPosition);
@@ -101,7 +106,7 @@ public class EnemyAI : MonoBehaviour
     {
         Vector3 direction = (target - transform.position).normalized;
         direction.y = 0;
-        Vector3 newPosition = transform.position + direction * moveSpeed * Time.deltaTime;
+        Vector3 newPosition = transform.position + direction * _moveSpeed * Time.deltaTime;
         _rb.MovePosition(newPosition);
         if (direction != Vector3.zero)
             transform.forward = direction;
@@ -109,11 +114,11 @@ public class EnemyAI : MonoBehaviour
 
     private void Attack()
     {
-        if (Time.time >= _lastAttackTime + attackCooldown)
+        if (Time.time >= _lastAttackTime + _attackCooldown)
         {
-            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            PlayerHealth playerHealth = _player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
-                playerHealth.TakeDamage(damage);
+                playerHealth.TakeDamage(_damage);
 
             _lastAttackTime = Time.time;
         }

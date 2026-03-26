@@ -5,14 +5,17 @@ public class HUDPresenter
     private IHUDView _view;
     private HUDModel _model;
     private EventBus _eventBus;
+    private QuestManager _questManager;
 
-    public HUDPresenter(IHUDView view, HUDModel model, EventBus eventBus, LevelManager levelManager)
+    public HUDPresenter(IHUDView view, HUDModel model, EventBus eventBus, LevelManager levelManager, QuestManager questManager)
     {
         _view = view;
         _model = model;
         _eventBus = eventBus;
+        _questManager = questManager;
 
         _view.OnMenuButtonClicked += OpenMenu;
+        _questManager.OnQuestsChanged += UpdateQuestDisplay;
 
         _eventBus.Subscribe<PlayerHealthChangedEvent>(OnHealthChanged);
         _eventBus.Subscribe<PlayerAbilityUsedEvent>(OnAbilityUsed);
@@ -50,5 +53,22 @@ public class HUDPresenter
     public void UpdateAbilityCooldown(float remaining)
     {
         _view.UpdateAbilityCooldown(remaining);
+    }
+
+    private void UpdateQuestDisplay()
+    {
+        var activeQuests = _questManager?.GetActiveQuests();
+        if (activeQuests == null) return;
+
+        string display = "";
+        foreach (var q in activeQuests)
+        {
+            display += $"{q.Title}: ";
+            if (q is KillQuest kq) display += kq.GetProgressText();
+            else if (q is ReachPointQuest) display += "Не выполнено";
+            else if (q is CollectQuest cq) display += cq.GetProgressText();
+            display += "\n";
+        }
+        _view.UpdateQuests(display);
     }
 }

@@ -20,11 +20,11 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        if (_input.AttackPressed && Time.time >= _lastAttackTime + _attackCooldown)
-        {
-            PerformAttack();
-            _lastAttackTime = Time.time;
-        }
+        //if (_input.AttackPressed && Time.time >= _lastAttackTime + _attackCooldown)
+        //{
+        //    PerformAttack();
+        //    _lastAttackTime = Time.time;
+        //}
     }
 
     private void PerformAttack()
