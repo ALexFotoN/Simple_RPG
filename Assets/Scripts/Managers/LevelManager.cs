@@ -13,7 +13,7 @@ public class LevelManager
         {
             if(_levelTemplates != null && _levelTemplates.Length > 0)
             {
-                return _levelTemplates[0].SceneName;
+                return _levelTemplates[_currentLevelIndex].SceneName;
             }
             return "1_Menu";
         }
@@ -25,7 +25,7 @@ public class LevelManager
         {
             if (_levelTemplates != null && _levelTemplates.Length > 0)
             {
-                return _levelTemplates[0];
+                return _levelTemplates[_currentLevelIndex];
             }
             return null;
         }

@@ -20,11 +20,11 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        //if (_input.AttackPressed && Time.time >= _lastAttackTime + _attackCooldown)
-        //{
-        //    PerformAttack();
-        //    _lastAttackTime = Time.time;
-        //}
+        if (_input.AttackPressed && Time.time >= _lastAttackTime + _attackCooldown)
+        {
+            PerformAttack();
+            _lastAttackTime = Time.time;
+        }
     }
 
     private void PerformAttack()
@@ -32,11 +32,11 @@ public class PlayerAttack : MonoBehaviour
         Collider[] hitEnemies = Physics.OverlapSphere(_attackPoint.position, _attackRange, _enemyLayer);
         foreach (var enemy in hitEnemies)
         {
-            var health = enemy.GetComponent<EnemyHealth>();
+            var health = enemy.GetComponentInParent<EnemyHealth>();
             if (health != null)
                 health.TakeDamage(_damage);
         }
-        _eventBus?.Publish(new PlayerAttackedEvent());
+        //_eventBus?.Publish(new PlayerAttackedEvent());
     }
 
     private void OnDrawGizmosSelected()

@@ -38,14 +38,14 @@ public class EnemyAI : MonoBehaviour
     {
         _player = playerTransform;
         _eventBus = eventBus;
+
+        _rb = GetComponent<Rigidbody>();
+        _health = GetComponent<EnemyHealth>();
+        if (_health != null) _health.Construct(_eventBus);
     }
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
-        _health = GetComponent<EnemyHealth>();
-        if (_health != null) _health.Construct(_eventBus);
-
         _startPosition = transform.position;
 
         _currentState = State.Idle;

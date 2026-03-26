@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f5b6692ea6b60a4a92e7929bbd3fafb, type: 3}
-  m_Name: LevelTemplate
+  m_Name: Level2Template
   m_EditorClassIdentifier: 
-  _sceneName: 2_Level_01
+  _sceneName: 3_Level_02
   _enemies: []
   _quests:
   - {fileID: 11400000, guid: 03e1575c840b1164381351b748d7f145, type: 2}
