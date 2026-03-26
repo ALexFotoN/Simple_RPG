@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PoofAbility : MonoBehaviour
@@ -11,7 +12,16 @@ public class PoofAbility : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, _lifeTime);
+        StartCoroutine(LifeTime());
+    }
+
+    private IEnumerator LifeTime()
+    {
+        _collider.enabled = true;
+        yield return new WaitForSeconds(0.1f);
+        _collider.enabled = false;
+        yield return new WaitForSeconds(_lifeTime);
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -19,6 +29,5 @@ public class PoofAbility : MonoBehaviour
         var direction = other.transform.position - transform.position;
         direction += Vector3.up;
         other.attachedRigidbody.AddForce(direction.normalized * _force, ForceMode.Impulse);
-        _collider.enabled = false;
     }
 }

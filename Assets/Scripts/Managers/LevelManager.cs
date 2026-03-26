@@ -56,6 +56,7 @@ public class LevelManager
         }
         else
         {
+            _currentLevelIndex = 0;
             OpenMenu();
         }
     }

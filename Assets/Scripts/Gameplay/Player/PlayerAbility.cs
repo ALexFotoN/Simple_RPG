@@ -42,7 +42,7 @@ public class PlayerAbility : MonoBehaviour
             {
                 _leftTime = 0;
             }
-            _eventBus?.Publish(new PlayerAbilityCooldownEvent(_leftTime));
+            _eventBus?.Publish(new PlayerAbilityCooldownEvent(_leftTime / _cooldown));
             yield return null;
         }
         _canUse = true;

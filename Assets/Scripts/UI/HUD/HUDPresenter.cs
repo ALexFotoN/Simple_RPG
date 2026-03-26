@@ -14,12 +14,10 @@ public class HUDPresenter
         _eventBus = eventBus;
         _questManager = questManager;
 
-        _view.OnMenuButtonClicked += OpenMenu;
         _questManager.OnQuestsChanged += UpdateQuestDisplay;
 
         _eventBus.Subscribe<PlayerHealthChangedEvent>(OnHealthChanged);
-        _eventBus.Subscribe<PlayerAbilityUsedEvent>(OnAbilityUsed);
-        //Subscribe PlayerAbilityCooldownEvent
+        _eventBus.Subscribe<PlayerAbilityCooldownEvent>(OnAbilityCooldown);
 
         UpdateView();
     }
@@ -31,28 +29,20 @@ public class HUDPresenter
         UpdateView();
     }
 
-    private void OnAbilityUsed(PlayerAbilityUsedEvent evt)
+    private void OnAbilityCooldown(PlayerAbilityCooldownEvent evt)
     {
-        // Начать отсчёт кулдауна (в идеале получать реальный кулдаун от PlayerAbility)
-        // Для простоты будем обновлять в Update через корутину или метод, но здесь просто пример
-        // Рекомендуется использовать событие с временем перезарядки.
-        // Упростим: подпишемся на событие и начнём обновление.
+        _model.AbilityCooldownRemaining = evt.Remaining;
+        UpdateAbilityCooldown();
     }
 
     private void UpdateView()
     {
         _view.UpdateHealth(_model.CurrentHealth, _model.MaxHealth);
-        // Обновление кулдауна можно вызывать в Update или получать из события
     }
 
-    private void OpenMenu()
+    public void UpdateAbilityCooldown()
     {
-        // Открыть меню паузы
-    }
-
-    public void UpdateAbilityCooldown(float remaining)
-    {
-        _view.UpdateAbilityCooldown(remaining);
+        _view.UpdateAbilityCooldown(_model.AbilityCooldownRemaining);
     }
 
     private void UpdateQuestDisplay()
