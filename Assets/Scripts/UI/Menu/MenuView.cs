@@ -4,8 +4,10 @@ using UnityEngine.UI;
 
 public class MenuView : MonoBehaviour, IMenuView
 {
-    [SerializeField] private Button playButton;
-    [SerializeField] private Button exitButton;
+    [SerializeField] 
+    private Button playButton;
+    [SerializeField] 
+    private Button exitButton;
 
     public event Action OnPlayClicked;
     public event Action OnExitClicked;
