@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
 {
-    [SerializeField] private GameObject _playerPrefab;
-    [SerializeField] private Transform _spawnPoint;
-    [SerializeField] private HUDView _hudViewPrefab;
+    [SerializeField] 
+    private GameObject _playerPrefab;
+    [SerializeField] 
+    private Transform _spawnPoint;
+    [SerializeField] 
+    private HUDView _hudViewPrefab;
+    [SerializeField]
+    private PlayerCamera _camFollow;
 
     private EventBus _eventBus;
     private LevelManager _levelManager;
@@ -56,6 +61,8 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
         rotate?.Construct(input);
         animator?.Construct(_eventBus);
 
+        _camFollow.Construct(playerObj.transform);
+
         SpawnEnemies(playerObj.transform);
         SetupQuests();
         SpawnItems();
@@ -77,6 +84,7 @@ public class GameSceneInstaller : MonoBehaviour, ISceneDependencyReceiver
         foreach (var spawnInfo in levelData.Enemies)
         {
             GameObject enemyObj = Instantiate(spawnInfo.Prefab);
+            enemyObj.transform.position = new Vector3(Random.Range(-2, 2f), 0, Random.Range(-2, 2f));
             EnemyAI ai = enemyObj.GetComponent<EnemyAI>();
             if (ai != null)
             {

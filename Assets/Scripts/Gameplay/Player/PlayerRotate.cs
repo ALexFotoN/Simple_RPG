@@ -9,7 +9,7 @@ public class PlayerRotate : MonoBehaviour
         _input = input;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (_input == null) return;
 

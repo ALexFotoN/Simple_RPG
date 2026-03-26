@@ -3,11 +3,16 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private float _jumpForce = 10f;
-    [SerializeField] private Transform _groundCheckPoint;
-    [SerializeField] private float _groundCheckDistance = 0.2f;
-    [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] 
+    private float _moveSpeed = 5f;
+    [SerializeField] 
+    private float _jumpForce = 10f;
+    [SerializeField] 
+    private Transform _groundCheckPoint;
+    [SerializeField] 
+    private float _groundCheckDistance = 0.2f;
+    [SerializeField] 
+    private LayerMask _groundLayer;
 
     private Rigidbody _rb;
     private IInputHandler _input;
@@ -31,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         if (_input == null) return;
-        _direction = _input.Move;
+        _direction = _input.Move.normalized;
         if(_input.JumpPressed)
             _jumpPressed = true;
         if (_input.JumpUnpressed)

@@ -15,6 +15,8 @@ MonoBehaviour:
   _sceneName: 2_Level_01
   _enemies:
   - {fileID: 11400000, guid: 16c3324e876cc4f4e8009c04e4b43616, type: 2}
+  - {fileID: 11400000, guid: 16c3324e876cc4f4e8009c04e4b43616, type: 2}
+  - {fileID: 11400000, guid: 16c3324e876cc4f4e8009c04e4b43616, type: 2}
   _quests:
   - {fileID: 11400000, guid: cf1d94788368c8d4793d1bcc26fcccd3, type: 2}
   - {fileID: 11400000, guid: 7cc50ef3605757d4fbcb0405df502743, type: 2}
